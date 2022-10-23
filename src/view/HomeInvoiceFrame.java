@@ -32,12 +32,15 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
      */
     public HomeInvoiceFrame() {
         initComponents();        
+        controller.updateTableView("Headers") ;
     }
 
     public HomeInvoiceFrame(String title) {
         super(title);
         initComponents();
+        controller.updateTableView("Headers") ;
 
+        //controller.updateTableView("Header") ;
     }
 
     /**
@@ -348,4 +351,79 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
 
     private Controller controller;
 
+    public void resetHeaderFields(String invNumber, Integer size) {
+        jLabel6.setText(invNumber.toString()); //invoice number
+        jDateChooser1.setDate(new Date()); //invoice date
+        jTextField1.setText(""); //invoice customer name
+        jLabel7.setText(""); //invoice total price
+
+        DefaultTableModel temp = (DefaultTableModel) jTable2.getModel();
+
+        //removing old data
+        int rows = temp.getRowCount();
+        for (int i = 0; i < rows; i++) {
+            temp.removeRow(0);
+        }
+
+        String[] row = {invNumber.toString(), "", "", "", ""};
+        for (int i = 0; i < size; i++) {
+            temp.addRow(row);
+        }
+    }
+
+    public Integer getSelectedItemIndex() {
+        int selected = jTable1.getSelectedRow();
+        return selected < 0 ? 0 : selected;
+    }
+
+    public void updateTable1Data(ArrayList<InvoiceHeader> data) { //update headers table
+        
+        DefaultTableModel temp = (DefaultTableModel) jTable1.getModel();
+
+        //removing old data
+        int rows = temp.getRowCount();
+        for (int i = 0; i < rows; i++) {
+            temp.removeRow(0);
+        }
+
+        //ading new data
+        for (int i = 0; i < data.size(); i++) {
+            temp.addRow(data.get(i).toString().split(","));
+        }
+
+    }
+
+    public JTable getjTable1() {
+        return jTable1;
+    }
+
+    public void updateTable2Data(ArrayList<InvoiceLine> data) { //update  invoice lines table 
+        DefaultTableModel temp = (DefaultTableModel) jTable2.getModel();
+
+        //removing old data
+        int rows = temp.getRowCount();
+        for (int i = 0; i < rows; i++) {
+            temp.removeRow(0);
+        }
+
+        //ading new data
+        for (int i = 0; i < data.size(); i++) {
+            temp.addRow(data.get(i).toString().split(","));
+        }
+
+    }
+
+    public void updateHeaderInfo(InvoiceHeader header) {    //right pane above invoice line table
+
+        jLabel6.setText(header.getNumber().toString()); //invoice number
+        try {
+            jDateChooser1.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(header.getDate())); //invoice date
+        } catch (ParseException ex) {
+            Logger.getLogger(HomeInvoiceFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jTextField1.setText(header.getName()); //invoice customer name
+        jLabel7.setText(header.getInvoiceTotal().toString()); //invoice total price
+
+    }
+    
 }
