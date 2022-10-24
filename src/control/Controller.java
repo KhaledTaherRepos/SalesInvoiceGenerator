@@ -191,6 +191,7 @@ public class Controller implements ActionListener, ListSelectionListener {
             // reading the chosen files
             try {
                 fileHandler.writeFile(this.headerInvoices);
+                JOptionPane.showMessageDialog(jFrame, "File saved successfully!", "Attention", JOptionPane.INFORMATION_MESSAGE);               
                 return ;
 
             } catch (Exception exception) {
