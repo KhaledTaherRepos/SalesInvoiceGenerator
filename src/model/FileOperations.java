@@ -15,6 +15,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -124,15 +128,22 @@ public class FileOperations {
     
     public void writeFile(ArrayList<InvoiceHeader> headers) throws FileNotFoundException , InvalidPathException, InvalidDataException, IOException
     {
+        
    
-         //checking if files exist
-       if (!headerFile.exists())
+       //checking if path that holds the file exists, without file name 
+       String dir = headerFile.getParent() ;
+       File fileLocation = new File (dir) ;
+       
+       if (!fileLocation.exists())
        {
-           throw new FileNotFoundException (headerFile.getAbsolutePath().toString()+ " wasn't found!") ;
+           throw new FileNotFoundException (dir + " wasn't found!") ;
        }   
-       if (!lineFile.exists())
+       dir = lineFile.getParent() ;
+       fileLocation = new File (dir) ;
+       
+       if (!fileLocation.exists())
        {
-           throw new FileNotFoundException (lineFile.getAbsolutePath().toString()+ " wasn't found!") ;
+           throw new FileNotFoundException (dir+ " wasn't found!") ;
        }
        
        //checking correct file extension extension
