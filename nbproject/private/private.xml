@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/github_release/SalesInvoiceGenerator/src/control/Controller.java</file>
+            <file>file:/C:/Users/pepo/Downloads/SalesInvoiceGeneratorApp/src/model/InvoiceLine.java</file>
+            <file>file:/C:/Users/pepo/Downloads/SalesInvoiceGeneratorApp/src/view/HomeInvoiceFrame.java</file>
+            <file>file:/C:/Users/pepo/Downloads/SalesInvoiceGeneratorApp/src/model/FileOperations.java</file>
+            <file>file:/C:/Users/pepo/Downloads/SalesInvoiceGeneratorApp/src/control/Controller.java</file>
+            <file>file:/C:/Users/pepo/Downloads/SalesInvoiceGeneratorApp/test/TestReadWriteFile.java</file>
+            <file>file:/C:/Users/pepo/Downloads/SalesInvoiceGeneratorApp/src/model/InvoiceHeader.java</file>
         </group>
     </open-files>
 </project-private>
