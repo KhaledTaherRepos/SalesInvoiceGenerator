@@ -5,7 +5,6 @@
  */
 package model;
 
-import com.sun.media.sound.InvalidDataException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,11 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,7 +42,7 @@ public class FileOperations {
         
     
     }
-    public ArrayList<InvoiceHeader> readFile() throws FileNotFoundException , InvalidPathException, InvalidDataException, IOException
+    public ArrayList<InvoiceHeader> readFile() throws FileNotFoundException , InvalidPathException, IOException
     {
         //checking if files exist
        if (!headerFile.exists())
@@ -102,7 +96,7 @@ public class FileOperations {
             lineArray = line.split(",") ;
             
             if (!lineArray[1].matches("([0-9]{2})-([0-9]{2})-([0-9]{4})"))   //usign regex to validate date format
-                throw new InvalidDataException("Date format has to be like this: dd-mm-yyyy") ;
+                throw new IOException("Date format has to be dd-mm-yyyy") ;
             
             ArrayList <InvoiceLine> headerLines = new ArrayList <InvoiceLine> () ;  //getting the specific lines for this invoice header
             
@@ -126,7 +120,7 @@ public class FileOperations {
         return headers;
     }
     
-    public void writeFile(ArrayList<InvoiceHeader> headers) throws FileNotFoundException , InvalidPathException, InvalidDataException, IOException
+    public void writeFile(ArrayList<InvoiceHeader> headers) throws FileNotFoundException , InvalidPathException, IOException
     {
         
    
