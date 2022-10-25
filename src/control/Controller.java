@@ -140,8 +140,8 @@ public class Controller implements ActionListener, ListSelectionListener {
         {
             return false;
         } else {
-            fileHandler.setHeaderFile(tempHeaderFile);
-            fileHandler.setLineFile(tempLineFile);
+            FileOperations.setHeaderFile(tempHeaderFile);
+            FileOperations.setLineFile(tempLineFile);
 
             // reading the chosen files
             try {
@@ -185,8 +185,8 @@ public class Controller implements ActionListener, ListSelectionListener {
         {
             return ;
         } else {
-            fileHandler.setHeaderFile(tempHeaderFile);
-            fileHandler.setLineFile(tempLineFile);
+            FileOperations.setHeaderFile(tempHeaderFile);
+            FileOperations.setLineFile(tempLineFile);
 
             // reading the chosen files
             try {
