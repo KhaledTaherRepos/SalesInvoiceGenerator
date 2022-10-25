@@ -203,8 +203,7 @@ public class Controller implements ActionListener, ListSelectionListener {
     }
 
     private void loadInvoiceFromView() {    //gets the data in the lines table from the view and load it to the model
-        Date date = jFrame.getjDateChooser1().getCalendar().getTime();
-        String dateString = new SimpleDateFormat("dd-MM-yyyy").format(date);
+        String date = jFrame.getDate() ;
         String customer = jFrame.getjTextField1().getText();
         Integer num = this.headerInvoices.size();     //set the default value as the size, in case of create new
         String name;
@@ -222,7 +221,7 @@ public class Controller implements ActionListener, ListSelectionListener {
             invLines.add(new InvoiceLine(num, name, price, count));
         }
 
-        InvoiceHeader newInvoice = new InvoiceHeader(num, dateString, customer, invLines); //the new record
+        InvoiceHeader newInvoice = new InvoiceHeader(num, date, customer, invLines); //the new record
 
         if (num <= this.headerInvoices.size() && num != 0) //id in range of existing invoices, it's edit
         {
