@@ -27,6 +27,7 @@ public class Controller implements ActionListener, ListSelectionListener {
     private ArrayList<InvoiceHeader> headerInvoices = new ArrayList<InvoiceHeader>();
     private FileOperations fileHandler;
     HeaderDialog headerDialog ;
+    LineDialog lineDialog ;
 
     public Controller() {
         fileHandler = new FileOperations();
@@ -79,10 +80,10 @@ public class Controller implements ActionListener, ListSelectionListener {
         } ///////////////// edit-create invoice case //////////////
         else if (action.equals("New Item")) {
 
-          //  loadInvoiceFromView();
-            JDialog d = new LineDialog (jFrame) ;
-            d.setVisible(true);
-          //  updateTableView("Headers");
+          
+            lineDialog = new LineDialog (jFrame) ;
+            lineDialog.setVisible(true);
+          
 
         } ///////////////// cancel invoice case //////////////
         else if (action.equals("Delete Item")) {
@@ -91,10 +92,11 @@ public class Controller implements ActionListener, ListSelectionListener {
         
         else if (action.equals("OKInvoice")) 
         {
-            System.out.println("here");
            headerInvoices.add(headerDialog.getData()) ;
            updateTableView("Headers");
+           jFrame.keepRowSelected(1, headerInvoices.size()-1) ;
            headerDialog.dispose() ;
+           
            
         }
         
@@ -103,6 +105,24 @@ public class Controller implements ActionListener, ListSelectionListener {
            headerDialog.dispose() ;
         }
         
+        else if (action.equals("OKLine")) 
+        {
+            int selectedItem = jFrame.getSelectedItemIndex();
+            InvoiceHeader updatedInvoice = headerInvoices.get(selectedItem);
+            updatedInvoice.addInvoiceLine(lineDialog.getData());
+            headerInvoices.set(selectedItem, updatedInvoice) ;
+            lineDialog.dispose();
+            jFrame.updateRightPanel(updatedInvoice);
+            jFrame.updateTable1Data(headerInvoices);
+            jFrame.keepRowSelected(1, selectedItem) ;
+            jFrame.keepRowSelected(2, updatedInvoice.getInvLines().size()-1) ;            
+
+           
+        }
+        else if (action.equals("CancelLine")) 
+        {
+           lineDialog.dispose();
+        }
 
     }
 

@@ -13,7 +13,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import model.InvoiceHeader;
-import control.Controller;
 
 /**
  *
@@ -27,13 +26,7 @@ public class HeaderDialog extends JDialog  {
     private JButton okButton, cancelButton ;
     public boolean okClicked = false ;
     
-    
-    public HeaderDialog ()
-    {
-        
-        
-    }
-    
+
     public HeaderDialog (HomeInvoiceFrame inv) {
         
         parent = inv ;
@@ -57,7 +50,7 @@ public class HeaderDialog extends JDialog  {
     dateField = new JTextField() ;
     add(dateField) ;
     
-    nameLabel = new JLabel("Name") ;
+    nameLabel = new JLabel("Customer") ;
     nameLabel.setHorizontalAlignment(JLabel.CENTER);
     add(nameLabel) ;
     

@@ -69,5 +69,12 @@ public class InvoiceHeader {
      {
          return this.number.toString() + "," + this.date + "," + name ;
      }
+     
+     public void addInvoiceLine (InvoiceLine line)
+     {
+         if (invLines == null)
+             invLines = new ArrayList<InvoiceLine> () ;
+         invLines.add(line );
+     }
     
 }
