@@ -31,6 +31,7 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
     public HomeInvoiceFrame(String title) {
         super(title);
         initComponents();
+        super.setLocationRelativeTo(null);
         controller.updateTableView("Headers") ;
 
         //controller.updateTableView("Header") ;
@@ -98,6 +99,11 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
         }
 
         jButton1.setText("Create New Invoice");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete Invoice");
 
@@ -119,19 +125,19 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "No,", "Item Name", "Item Price", "Count", "Item Total"
+                "No.", "Item Name", "Item Price", "Count", "Item Total"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jButton3.setText("Save");
+        jButton3.setText("New Item");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Cancel");
+        jButton4.setText("Delete Item");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -298,6 +304,10 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -358,14 +368,10 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
-    private Controller controller;
+    Controller controller;
 
-    public void resetHeaderFields(String invNumber, Integer size) {
-        jLabel6.setText(invNumber.toString()); //invoice number
-        jTextField2.setText(""); //invoice date
-        jTextField1.setText(""); //invoice customer name
-        jLabel7.setText(""); //invoice total price
-
+    public void resetTable2Fields() {
+       
         DefaultTableModel temp = (DefaultTableModel) jTable2.getModel();
 
         //removing old data
@@ -373,11 +379,7 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
         for (int i = 0; i < rows; i++) {
             temp.removeRow(0);
         }
-
-        String[] row = {invNumber.toString(), "", "", "", ""};
-        for (int i = 0; i < size; i++) {
-            temp.addRow(row);
-        }
+       
     }
 
     public Integer getSelectedItemIndex() {
@@ -430,6 +432,18 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
         jTextField1.setText(header.getName()); //invoice customer name
         jLabel7.setText(header.getInvoiceTotal().toString()); //invoice total price
 
+    }
+    
+    public void updateRightPanel (InvoiceHeader header)
+    {
+        updateHeaderInfo(header) ;
+        if (header.getInvLinesCount() > 0)
+            updateTable2Data(header.getInvLines()) ;
+        else {
+               //removing old data
+                resetTable2Fields();
+        }
+        
     }
 
     public String getDate() {

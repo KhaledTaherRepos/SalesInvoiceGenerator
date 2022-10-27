@@ -26,8 +26,16 @@ public class InvoiceHeader {
         this.name = name;
         this.invLines = invLines;
     }
+    
+    public int getInvLinesCount ()
+    {
+        if (invLines==null)
+            return 0 ;
+        else return invLines.size() ;
+    }
 
     public ArrayList<InvoiceLine> getInvLines() {
+  
         return invLines;
     }
 
@@ -45,6 +53,8 @@ public class InvoiceHeader {
     
       public Double getInvoiceTotal () {
         Double total = 0.0;
+        if (invLines == null)
+            return total ;
         for (int i=0 ; i<invLines.size() ; i++)
             total += invLines.get(i).calculateItemTotal() ;
         return total ;

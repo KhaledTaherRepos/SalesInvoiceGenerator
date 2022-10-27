@@ -8,17 +8,14 @@ package control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import model.FileOperations;
-import model.InvoiceHeader;
-import model.InvoiceLine;
-import view.HomeInvoiceFrame;
+import model.* ;
+import view.* ;
 
 /**
  *
@@ -29,15 +26,16 @@ public class Controller implements ActionListener, ListSelectionListener {
     private HomeInvoiceFrame jFrame;
     private ArrayList<InvoiceHeader> headerInvoices = new ArrayList<InvoiceHeader>();
     private FileOperations fileHandler;
+    HeaderDialog headerDialog ;
 
     public Controller() {
         fileHandler = new FileOperations();
-        silenetLoadFiles();
     }
 
     public Controller(HomeInvoiceFrame frame) {
         this();
         jFrame = frame;
+        silenetLoadFiles();
 
     }
 
@@ -62,30 +60,15 @@ public class Controller implements ActionListener, ListSelectionListener {
         else if (action.equals("Save File")) {
 
             saveToDisk () ;
-            /*try {
-
-                fileHandler.writeFile(this.headerInvoices);
-
-                JOptionPane.showMessageDialog(jFrame, "File Saved Successfully. \n", "Attention", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (Exception exception) {
-                JOptionPane.showMessageDialog(jFrame, "This error occured when trying to save your file: \n" + exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }*/
+   
         } 
         ///////////////// create invoice case //////////////
         
         else if (action.equals("Create New Invoice")) {
-            //ask user to enter number of lines in the invoice and create corresponding rows in the item table with id bigger than the last invoice id.
-            String val = JOptionPane.showInputDialog(jFrame, "Enter the number of items in the new invoice: ", "Attention", JOptionPane.INFORMATION_MESSAGE) ;
-            int userItemNumber = 0 ;
-            if (val != null)  userItemNumber = Integer.parseInt(val) ;   //make sure user entered correct number
-            else return ;
-            
-            if (userItemNumber > 0) {
-                Integer size = this.headerInvoices.size();
-                jFrame.resetHeaderFields(String.valueOf(size + 1), userItemNumber);
-            }
-            
+      
+        headerDialog = new HeaderDialog(jFrame) ;
+        headerDialog.setVisible(true);
+   
 
         } ///////////////// delete invoice case //////////////
         else if (action.equals("Delete Invoice")) {
@@ -94,16 +77,32 @@ public class Controller implements ActionListener, ListSelectionListener {
             updateTableView("Headers");
 
         } ///////////////// edit-create invoice case //////////////
-        else if (action.equals("Save")) {
+        else if (action.equals("New Item")) {
 
-            loadInvoiceFromView();
-
-            updateTableView("Headers");
+          //  loadInvoiceFromView();
+            JDialog d = new LineDialog (jFrame) ;
+            d.setVisible(true);
+          //  updateTableView("Headers");
 
         } ///////////////// cancel invoice case //////////////
-        else if (action.equals("Cancel")) {
-            jFrame.resetHeaderFields("", 4);
+        else if (action.equals("Delete Item")) {
+           // jFrame.resetHeaderFields("", 4);
         }
+        
+        else if (action.equals("OKInvoice")) 
+        {
+            System.out.println("here");
+           headerInvoices.add(headerDialog.getData()) ;
+           updateTableView("Headers");
+           headerDialog.dispose() ;
+           
+        }
+        
+        else if (action.equals("CancelInvoice")) 
+        {
+           headerDialog.dispose() ;
+        }
+        
 
     }
 
@@ -195,7 +194,7 @@ public class Controller implements ActionListener, ListSelectionListener {
                 return ;
 
             } catch (Exception exception) {
-                JOptionPane.showMessageDialog(jFrame, "This error occured when trying to load your file: \n" + exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jFrame, "This error occured when trying to save your file: \n" + exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 return  ;
             }
 
@@ -239,8 +238,7 @@ public class Controller implements ActionListener, ListSelectionListener {
         try {
             this.headerInvoices = fileHandler.readFile();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(jFrame, "This error occured when trying to load your file: \n", "Error", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(jFrame, "This error occured when trying to load your file: \n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -253,9 +251,8 @@ public class Controller implements ActionListener, ListSelectionListener {
         } else if (table.equals("Lines")) {
             int index = jFrame.getSelectedItemIndex();
             if (index < this.headerInvoices.size()) {
-                InvoiceHeader SelectedHeaderInvoice = this.headerInvoices.get(index);
-                jFrame.updateHeaderInfo(SelectedHeaderInvoice);
-                jFrame.updateTable2Data(SelectedHeaderInvoice.getInvLines());
+                InvoiceHeader SelectedHeaderInvoice = headerInvoices.get(index);
+                jFrame.updateRightPanel(SelectedHeaderInvoice) ;
             }
         }
     }
