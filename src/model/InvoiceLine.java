@@ -59,16 +59,7 @@ public class InvoiceLine {
     public void setCount(Integer count) {
         this.count = count;
     }
-/*
-    public InvoiceHeader getInvoicesHeaders() {
-        return invoicesHeaders;
-    }
 
-    public void setInvoicesHeaders(InvoiceHeader invoicesHeaders) {
-        this.invoicesHeaders = invoicesHeaders;
-    }
-*/
-    
    public String toString() //used to update table model
    {
         return this.num.toString() + "," + this.name + "," + this.price + "," + this.count + "," + calculateItemTotal() ;

@@ -76,5 +76,12 @@ public class InvoiceHeader {
              invLines = new ArrayList<InvoiceLine> () ;
          invLines.add(line );
      }
+     
+     public void removeInvoiceLine (int index)
+     {
+         if (invLines == null)
+             invLines = new ArrayList<InvoiceLine> () ;
+         invLines.remove(index) ;
+     }
     
 }

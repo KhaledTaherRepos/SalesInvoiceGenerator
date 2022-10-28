@@ -73,7 +73,7 @@ public class Controller implements ActionListener, ListSelectionListener {
 
         } ///////////////// delete invoice case //////////////
         else if (action.equals("Delete Invoice")) {
-            int index = jFrame.getSelectedItemIndex();
+            int index = jFrame.getSelectedItemIndex(1);
             this.headerInvoices.remove(index);         //remvove the item with the selected index from the model
             updateTableView("Headers");
 
@@ -87,7 +87,13 @@ public class Controller implements ActionListener, ListSelectionListener {
 
         } ///////////////// cancel invoice case //////////////
         else if (action.equals("Delete Item")) {
-           // jFrame.resetHeaderFields("", 4);
+           int selectedHeader = jFrame.getSelectedItemIndex(1) ;
+           int selectedLine = jFrame.getSelectedItemIndex(2) ;
+           headerInvoices.get(selectedHeader).removeInvoiceLine(selectedLine);
+           jFrame.updateTable1Data(headerInvoices);
+           jFrame.keepRowSelected(1, selectedHeader);
+           jFrame.updateRightPanel( headerInvoices.get(selectedHeader));
+           jFrame.keepRowSelected(2, selectedLine - 1);          
         }
         
         else if (action.equals("OKInvoice")) 
@@ -107,7 +113,7 @@ public class Controller implements ActionListener, ListSelectionListener {
         
         else if (action.equals("OKLine")) 
         {
-            int selectedItem = jFrame.getSelectedItemIndex();
+            int selectedItem = jFrame.getSelectedItemIndex(1);
             InvoiceHeader updatedInvoice = headerInvoices.get(selectedItem);
             updatedInvoice.addInvoiceLine(lineDialog.getData());
             headerInvoices.set(selectedItem, updatedInvoice) ;
@@ -269,7 +275,7 @@ public class Controller implements ActionListener, ListSelectionListener {
             jFrame.updateTable1Data(this.headerInvoices);
 
         } else if (table.equals("Lines")) {
-            int index = jFrame.getSelectedItemIndex();
+            int index = jFrame.getSelectedItemIndex(1);
             if (index < this.headerInvoices.size()) {
                 InvoiceHeader SelectedHeaderInvoice = headerInvoices.get(index);
                 jFrame.updateRightPanel(SelectedHeaderInvoice) ;

@@ -373,8 +373,10 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
        
     }
 
-    public Integer getSelectedItemIndex() {
-        int selected = jTable1.getSelectedRow();
+    public Integer getSelectedItemIndex(int tableNum) {
+        JTable table  = new JTable();
+        table = ( tableNum == 1 ) ? jTable1 : jTable2 ;
+        int selected = table.getSelectedRow();
         return selected < 0 ? 0 : selected;
     }
 
@@ -417,6 +419,7 @@ public class HomeInvoiceFrame extends javax.swing.JFrame {
     
     public void keepRowSelected (int tableNum, int index)
     {
+        if (index < 0) return ;
         JTable table  = new JTable();
         table = ( tableNum == 1 ) ? jTable1 : jTable2 ;
         table.setRowSelectionInterval(index, index);
