@@ -1,7 +1,29 @@
 # SalesInvoiceGenerator
+### Overview
+The SalesInvoiceGenerator is a Java-based application designed to generate sales invoices. This project serves as an educational tool for learning Java programming concepts, including file handling, GUI development, and project structuring.
 
-A sales invoice is an accounting document that records a business transaction. It provides the business with a record of the services they’ve provided to a client, when the services were rendered and how much money the client owes the business.  Typically, a sales invoice will include a description of the service provided and the amount owed. Sales invoices are crucial to small-business accounting because they enable you to record transactions of your sales for bookkeeping purposes.
+### Features
+- Generate and manage sales invoices.
+- Load data from CSV files.
+- User-friendly graphical interface.
+- Integration with jcalendar for date selection.
 
-# fixed issue
+## Getting Started
 
-The jcalender was causing a build issue since it's reference was an absolute path. Making it a relative path allowed the app to build on other computers successfully.
+### Prerequisites
+- Java Development Kit (JDK) 8 or higher
+- NetBeans IDE (or any other preferred Java IDE)
+
+### Installation
+- Clone the repository or download the ZIP file.
+``` sh
+git clone <repo_name>
+```
+- Open the project in NetBeans IDE.
+- Build the project using the provided build.xml file.
+- Run the project from the IDE.
+
+### Usage
+- Launch the application.
+- Use the interface to load customer and product data from CSV files.
+- Generate and manage invoices as needed.
